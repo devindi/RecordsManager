@@ -3,7 +3,7 @@ RecordsManager
 Программа для управления записями звонков.
 
 Создана по просьбе http://4pda.ru/forum/index.php?showtopic=214758&view=findpost&p=27333234
-Расплоложение файлов sdcard/Sound
+Распололожение файлов sdcard/Sound
 Формат имени файлов YYMMDD_HHMMSS_.#W_#P.amr
 
 #W - направление звонка (IN/OUT)
