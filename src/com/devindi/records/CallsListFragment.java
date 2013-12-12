@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CallsListFragment extends ListFragment {
-    List<Call> files = new ArrayList<Call>();;
+    List<Call> files = new ArrayList<Call>();
     FilenameFilter inFilter = new FilenameFilter() {
         @Override
         public boolean accept(File file, String name) {

@@ -40,6 +40,7 @@ public class CallsAdapter extends BaseAdapter {
         if(view == null)
             view = inflater.inflate(R.layout.call_item, parent, false);
         current = files.get(position);
+        assert view != null;
         TextView nameView = (TextView) view.findViewById(R.id.name);
         TextView dateView = (TextView) view.findViewById(R.id.date);
         TextView timeView = (TextView) view.findViewById(R.id.time);

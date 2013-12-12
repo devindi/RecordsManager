@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import java.io.File;
 
-/**
- * Created by devindi on 12/12/13.
- */
 public class ConfirmDeleteDialog extends DialogFragment implements DialogInterface.OnClickListener {
     private String fileName;
     private CallsListFragment parent;
