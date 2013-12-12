@@ -8,7 +8,6 @@
             style="@style/layout_f_w"
             android:stretchColumns="*" >
         <TableRow
-                android:id="@+id/tableRow1"
                 android:background="#dddddd"
                 style="@style/layout_wrap">
 
@@ -21,8 +20,8 @@
                     android:orientation="vertical" >
 
                 <TextView
-                        android:id="@+id/textView1"
                         style="@style/text_title"
+                        android:gravity="center"
                         android:text="@string/in_tab_title" />
             </LinearLayout>
 
@@ -35,8 +34,8 @@
                     android:orientation="vertical" >
 
                 <TextView
-                        android:id="@+id/textView1"
                         style="@style/text_title"
+                        android:gravity="center"
                         android:text="@string/out_tab_title" />
 
             </LinearLayout>

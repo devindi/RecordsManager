@@ -25,7 +25,7 @@ public class RecordsActivity extends FragmentActivity {
 
     private void setUpView(){
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
     }
