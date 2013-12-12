@@ -1,9 +1,13 @@
 package com.devindi.records;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ListFragment;
+import android.view.View;
+import android.widget.ListView;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -59,7 +63,7 @@ public class CallsListFragment extends ListFragment {
         String number = name.substring(start, name.length()-4);
         return new Call(number,
                 name.substring(4, 6) + "/" + name.substring(2, 4) + "/" + name.substring(0, 2),
-                name.substring(7, 9) + ":" + name.substring(9, 11));
+                name.substring(7, 9) + ":" + name.substring(9, 11), name);
     }
 
     @Override
@@ -67,5 +71,15 @@ public class CallsListFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         CallsAdapter adapter = new CallsAdapter(files, context);
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
+        String name = view.getTag().toString();
+        Uri playUri = Uri.parse("file:/"+Environment.getExternalStorageDirectory().toString() + "/Sound/" + name);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(playUri, "audio/*");
+        startActivity(intent);
     }
 }

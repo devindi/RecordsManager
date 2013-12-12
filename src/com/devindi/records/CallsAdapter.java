@@ -46,6 +46,7 @@ public class CallsAdapter extends BaseAdapter {
         nameView.setText(current.getNumber());
         dateView.setText(current.getDate());
         timeView.setText(current.getTime());
+        view.setTag(current.getFile());
         return view;
     }
 }
