@@ -3,4 +3,5 @@
     <string name="app_name">RecordsManager</string>
     <string name="in_tab_title">INCOMING</string>
     <string name="out_tab_title">OUTGOING</string>
+    <string name="confirm_delete">Do you want to delete file?</string>
 </resources>

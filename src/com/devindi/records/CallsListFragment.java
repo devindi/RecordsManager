@@ -1,12 +1,12 @@
 package com.devindi.records;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.File;
@@ -16,30 +16,63 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CallsListFragment extends ListFragment {
-    List<Call> files;
-    Context context;
+    List<Call> files = new ArrayList<Call>();;
+    FilenameFilter inFilter = new FilenameFilter() {
+        @Override
+        public boolean accept(File file, String name) {
+            return name.contains("IN");
+        }
+    };
+    FilenameFilter outFilter = new FilenameFilter() {
+        @Override
+        public boolean accept(File file, String name) {
+            return name.contains("OUT");
+        }
+    };
+    int type;
 
     /**
     *
-    * @param context app contect
     * @param type 0 - incoming calls,
     *             1 - outgoing calls
     */
-    public CallsListFragment(Context context, int type) {
-        this.context = context;
-        files = new ArrayList<Call>();
-        FilenameFilter inFilter = new FilenameFilter() {
+    public static CallsListFragment newInstance(int type){
+        CallsListFragment fragment = new CallsListFragment();
+        fragment.type = type;
+        return fragment;
+    }
+
+
+    private Call parse(String name) {
+        int start = name.lastIndexOf("_")+1;
+        String number = name.substring(start, name.length()-4);
+        return new Call(number,
+                name.substring(4, 6) + "/" + name.substring(2, 4) + "/" + name.substring(0, 2),
+                name.substring(7, 9) + ":" + name.substring(9, 11), name);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        CallsAdapter adapter = new CallsAdapter(files, getActivity());
+        setListAdapter(adapter);
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean accept(File file, String name) {
-                return name.contains("IN");
+            public boolean onItemLongClick(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                showDialog(view.getTag().toString());
+                return true;
             }
-        };
-        FilenameFilter outFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.contains("OUT");
-            }
-        };
+        });
+        this.updateData();
+    }
+
+    private void showDialog(String fileName) {
+        ConfirmDeleteDialog confirmDialog = ConfirmDeleteDialog.newInstance(fileName, this);
+        confirmDialog.show(getFragmentManager(), "confirmDialog");
+    }
+
+    void updateData(){
+        files.clear();
         String root_sd = Environment.getExternalStorageDirectory().toString();
         File file = new File( root_sd + "/Sound" );
         List<String> names;
@@ -56,21 +89,7 @@ public class CallsListFragment extends ListFragment {
         for(String name : names){
             files.add(parse(name));
         }
-    }
-
-    private Call parse(String name) {
-        int start = name.lastIndexOf("_")+1;
-        String number = name.substring(start, name.length()-4);
-        return new Call(number,
-                name.substring(4, 6) + "/" + name.substring(2, 4) + "/" + name.substring(0, 2),
-                name.substring(7, 9) + ":" + name.substring(9, 11), name);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        CallsAdapter adapter = new CallsAdapter(files, context);
-        setListAdapter(adapter);
+        ((CallsAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     @Override

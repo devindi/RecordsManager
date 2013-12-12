@@ -15,7 +15,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new CallsListFragment(context, position);
+        return CallsListFragment.newInstance(position);
     }
 
     @Override
