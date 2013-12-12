@@ -57,8 +57,9 @@ public class CallsListFragment extends ListFragment {
     private Call parse(String name) {
         int start = name.lastIndexOf("_")+1;
         String number = name.substring(start, name.length()-4);
-        String date = name.substring(0, 6);
-        return new Call(number, date, name.substring(7, 9) + ":" + name.substring(9, 11));
+        return new Call(number,
+                name.substring(4, 6) + "/" + name.substring(2, 4) + "/" + name.substring(0, 2),
+                name.substring(7, 9) + ":" + name.substring(9, 11));
     }
 
     @Override
